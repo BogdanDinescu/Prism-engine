@@ -28,6 +28,8 @@ namespace Prism
             services.AddDbContext<DatabaseCtx>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddCors();
+
             services.AddControllers();
 
             // configure jwt authentication
@@ -80,6 +82,11 @@ namespace Prism
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthorization();
 
