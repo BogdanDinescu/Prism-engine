@@ -8,11 +8,13 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Prism.Data;
+using Microsoft.AspNetCore.Cors;
 
 namespace Prism.Controllers
 {
     [Authorize]
     [ApiController]
+    [EnableCors("AllowOrigin")]
     [Route("user")]
     public class UserController : ControllerBase
     {
@@ -42,7 +44,7 @@ namespace Prism.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
+                    new Claim(ClaimTypes.Name, user.UserId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

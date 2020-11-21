@@ -5,7 +5,16 @@ using System.Linq;
 
 namespace Prism.Services
 {
-    public class UserService
+    public interface IUserService
+    {
+        User Authenticate(string email, string password);
+        User Register(User user, string password);
+        void Update(User newUser, string password);
+        void Delete(int id);
+        User GetById(int id);
+    }
+
+    public class UserService: IUserService
     {
         private DatabaseCtx context;
 
@@ -20,12 +29,14 @@ namespace Prism.Services
             {
                 return null;
             }
-            var user = context.Users.SingleOrDefault(u => u.Email.Equals(email));
+            User user = context.Users.SingleOrDefault(u => u.Email.Equals(email));
             
             if (user == null)
                 return null;
+
             if (!VerifyPassword(password, user.Password, user.Salt))
                 return null;
+
             return user;
         }
 
@@ -69,35 +80,30 @@ namespace Prism.Services
             }
         }
 
-        private (string,string) PasswordHash(string password)
+        private (string,byte[]) PasswordHash(string password)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty.");
             var sha256 = new System.Security.Cryptography.HMACSHA256();
-            
-            string passwordSalt = BitConverter.ToString(sha256.Key);
+
+            byte[] passwordSalt = sha256.Key;
             string passwordHash = BitConverter.ToString(sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)));
-            System.Diagnostics.Debug.WriteLine(passwordHash);
-            System.Diagnostics.Debug.WriteLine(passwordSalt);
             sha256.Clear();
 
             return (passwordHash, passwordSalt);
         }
 
-        private bool VerifyPassword(string password, string passwordHash, string salt)
+        private bool VerifyPassword(string password, string passwordHash, byte[] salt)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty");
             /*if (passwordHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
             if (password.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");*/
 
-            var sha256 = new System.Security.Cryptography.HMACSHA256(System.Text.Encoding.UTF8.GetBytes(salt));
-            System.Diagnostics.Debug.WriteLine(salt);
+            var sha256 = new System.Security.Cryptography.HMACSHA256(salt);
             string computedHash = BitConverter.ToString(sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)));
-            System.Diagnostics.Debug.WriteLine(passwordHash);
-            System.Diagnostics.Debug.WriteLine(computedHash);
 
-            if (computedHash.Equals(passwordHash))
+            if (!computedHash.Equals(passwordHash))
                 return false;
 
             return true;

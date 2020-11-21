@@ -31,7 +31,7 @@ export class AuthentificationService {
 
   login(data: any): Observable<any> {
     return this.http
-      .post(this.url + 'user/login', data, this.getHeaders())
+      .post(this.url + 'user/authenticate', data, this.getHeaders())
       .pipe(
         tap((response) => {
           localStorage.setItem('token', response.token);
