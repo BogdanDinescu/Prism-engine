@@ -44,7 +44,8 @@ namespace Prism.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.UserId.ToString())
+                    new Claim(ClaimTypes.Name, user.UserId.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -57,6 +58,7 @@ namespace Prism.Controllers
             {
                 Id = user.UserId,
                 Name = user.Name,
+                Role = user.Role,
                 Token = tokenString
             });
         }
@@ -70,7 +72,6 @@ namespace Prism.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -93,6 +94,7 @@ namespace Prism.Controllers
             }
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

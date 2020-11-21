@@ -20,6 +20,10 @@ export class AuthentificationService {
     };
   }
 
+  isAuthenticated(): boolean {
+    return localStorage.getItem('token') !== null
+  }
+
   register(data: any): Observable<any> {
     return this.http
       .post(this.url + 'user/register', data, this.getHeaders())

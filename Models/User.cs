@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Prism.Models
@@ -25,5 +26,7 @@ namespace Prism.Models
         [MinLength(2, ErrorMessage = "Name could not be shorter than 2 characters long")]
         [MaxLength(40, ErrorMessage = "Name could not be longer than 40 characters long")]
         public string Name { get; set; }
+
+        public string Role { get; set; } = "user";
     }
 }
