@@ -7,6 +7,10 @@
         placeholder="Email ..."
         formControlName="Email"
     />
+    <span 
+        class="text-danger" 
+        *ngIf="!registerForm.controls.Email.pristine && registerForm.controls.Email.status === 'INVALID'"
+    >Email is invalid</span>
   </div>
   <div class="form-group">
     <label>Password</label>
@@ -16,6 +20,10 @@
         placeholder="Password ..."
         formControlName="Password"
     />
+    <span 
+        class="text-danger" 
+        *ngIf="!registerForm.controls.Password.pristine && registerForm.controls.Password.status === 'INVALID'"
+    >Password cannot be empty<br></span>
     <label>Confirm Password</label>
     <input
         class="form-control"
@@ -23,6 +31,10 @@
         placeholder="Confirm password ..."
         formControlName="ConfirmPassword"
     />
+    <span 
+        class="text-danger" 
+        *ngIf="!registerForm.controls.Password.pristine && !registerForm.controls.ConfirmPassword.pristine && registerForm.controls.ConfirmPassword.status === 'INVALID'"
+    >The passwords are not the same</span>
   </div>
   <div class="form-group">
     <label>Name</label>
@@ -32,6 +44,10 @@
         placeholder="Name ..."
         formControlName="Name"
     />
+    <span 
+        class="text-danger" 
+        *ngIf="!registerForm.controls.Name.pristine && registerForm.controls.Name.status === 'INVALID'"
+    >Name cannot be empty</span>
   </div>
 
   <button
@@ -41,6 +57,16 @@
   >
     Register
   </button>
+  <br>
+  <span 
+        class="text-danger" 
+        *ngIf="errorMessage.length"
+    >{{errorMessage}}</span>
+  <span 
+        class="text-success" 
+        *ngIf="success"
+    >Register successful!</span>
+  <br>
   You already have an account? Click <a [routerLink]="['/login']">here</a>
 </form>
 

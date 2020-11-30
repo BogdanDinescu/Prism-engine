@@ -28,8 +28,7 @@ export class AuthentificationService {
     return this.http
       .post(this.url + 'user/register', data, this.getHeaders())
       .pipe(
-        tap((response) => console.log(response)),
-        catchError(this.handleError('register'))
+        tap((response) => console.log(response))
       );
   }
 
@@ -41,14 +40,5 @@ export class AuthentificationService {
           localStorage.setItem('token', response.token);
         })
       );
-  }
-
-  private handleError<T>(result?: T) {
-    return (error: any): Observable<T> => {
-      if (error.status == 401) {
-        console.log('NU MAI AI ACCES!');
-      }
-      return of(result as T);
-    };
   }
 }

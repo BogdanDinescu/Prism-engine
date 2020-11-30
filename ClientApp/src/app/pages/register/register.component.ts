@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
-  public submitted: boolean = false;
-  public serverError: boolean = false;
+  public errorMessage: string = '';
+  public success: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private auth: AuthentificationService
@@ -36,18 +36,28 @@ export class RegisterComponent implements OnInit {
   }
 
   doRegister() {
-    this.submitted = true;
-    this.serverError = false;
-
     if (this.registerForm.status === 'VALID') {
       this.auth.register(this.registerForm.value).subscribe(
         (res) => {
-          console.log(res);
+          this.success = true;
+          this.errorMessage = "";
         },
         (err) => {
-          if (err) {
-            this.serverError = true;
+          if (err.error && err.error.errors) {
+            if (err.error.errors.Email) {
+              this.errorMessage = err.error.errors.Email[0];
+              return;
+            }
+            if (err.error.errors.Password) {
+              this.errorMessage = err.error.errors.Password[0];
+              return;
+            }
+            if (err.error.errors.Name) {
+              this.errorMessage = err.error.errors.Name[0];
+              return;
+            }
           }
+            
         }
       );
     }
