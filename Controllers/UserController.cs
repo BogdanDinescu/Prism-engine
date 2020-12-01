@@ -14,7 +14,6 @@ namespace Prism.Controllers
 {
     [Authorize]
     [ApiController]
-    [EnableCors("AllowOrigin")]
     [Route("user")]
     public class UserController : ControllerBase
     {

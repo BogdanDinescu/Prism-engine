@@ -1,1 +1,8 @@
-<p>home works!</p>
+<div *ngFor="let article of articles">
+    <app-news-article
+    [title] = "article.title"
+    [imageUrl] = "article.imageUrl"
+    [content] = "article.content"
+    [link] = "article.link"
+    ></app-news-article>
+ </div>

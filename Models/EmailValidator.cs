@@ -1,5 +1,4 @@
 ﻿using Prism.Data;
-using Prism.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;

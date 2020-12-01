@@ -92,7 +92,7 @@ namespace Prism
 
             app.UseRouting();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors("AllowOrigin");
 
             app.UseAuthentication();
             app.UseAuthorization();

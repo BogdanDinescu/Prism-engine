@@ -1,5 +1,4 @@
-﻿using System.Linq;
-namespace Prism.Data
+﻿namespace Prism.Data
 {
     public class DbInitializer
     {

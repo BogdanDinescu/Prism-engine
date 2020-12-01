@@ -24,6 +24,10 @@ export class AuthentificationService {
     return localStorage.getItem('token') !== null
   }
 
+  getToken(): string {
+    return localStorage.getItem('token');
+  }
+
   register(data: any): Observable<any> {
     return this.http
       .post(this.url + 'user/register', data, this.getHeaders())
