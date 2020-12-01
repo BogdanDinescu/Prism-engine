@@ -1,8 +1,10 @@
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" [src]="imageUrl" alt="Fara imagine">
+<div class="card shadow p-3 mb-2 bg-white rounded" style="width: 20rem;">
+    <a [href]="link" target="_blank">
+      <img class="card-img-top" [src]="imageUrl" alt="Fara imagine">
+    </a>
     <div class="card-body">
       <h5 class="card-title font-weight-bold">{{title}}</h5>
       <p class="card-text">{{content}}</p>
-      <a [href]="link" target="_blank" class="btn btn-primary">Citeste...</a>
+      <a [href]="link" target="_blank">Citește mai mult</a>
     </div>
   </div>

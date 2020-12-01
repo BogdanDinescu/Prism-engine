@@ -1,43 +1,46 @@
-<h1>Login</h1>
-<form [formGroup]="loginForm" (ngSubmit)="doLogin()" class="col-6">
-  <div class="form-group">
-    <label>Email</label>
-    <input
-        class="form-control"
-        placeholder="Email ..."
-        formControlName="Email"
-    />
-    <span 
-        class="text-danger" 
-        *ngIf="!loginForm.controls.Email.pristine && loginForm.controls.Email.status === 'INVALID'"
-    >Email is invalid</span>
-  </div>
-  <div class="form-group">
-    <label>Password</label>
-    <input
-        class="form-control"
-        type="password"
-        placeholder="Password ..."
-        formControlName="Password"
-    />
-    <span 
-        class="text-danger" 
-        *ngIf="!loginForm.controls.Password.pristine && loginForm.controls.Password.status === 'INVALID'"
-    >Password cannot be empty</span>
-  </div>
+<div class="d-flex justify-content-center align-items-center flex-column">
+  <img class="logo" src="/assets/prism-logo.png">
+  <form [formGroup]="loginForm" (ngSubmit)="doLogin()" class="col-12 col-md-6">
+    <h1>Login</h1>
+    <div class="form-group">
+      <label>Email</label>
+      <input
+          class="form-control"
+          placeholder="Email ..."
+          formControlName="Email"
+      />
+      <span 
+          class="text-danger" 
+          *ngIf="!loginForm.controls.Email.pristine && loginForm.controls.Email.status === 'INVALID'"
+      >Email is invalid</span>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input
+          class="form-control"
+          type="password"
+          placeholder="Password ..."
+          formControlName="Password"
+      />
+      <span 
+          class="text-danger" 
+          *ngIf="!loginForm.controls.Password.pristine && loginForm.controls.Password.status === 'INVALID'"
+      >Password cannot be empty</span>
+    </div>
 
-  <button
-    type="submit"
-    class="btn btn-success"
-    [disabled]="loginForm.status === 'INVALID'"
-  >
-    Login
-  </button>
-  <br>
-  <span 
-        class="text-danger" 
-        *ngIf="errorMessage.length"
-    >{{errorMessage}}</span>
-  <br>
-  You don't have an account? Click <a [routerLink]="['/register']">here</a>
-</form>
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="loginForm.status === 'INVALID'"
+    >
+      Login
+    </button>
+    <br>
+    <span 
+          class="text-danger" 
+          *ngIf="errorMessage.length"
+      >{{errorMessage}}</span>
+    <br>
+    You don't have an account? Click <a [routerLink]="['/register']">here</a>
+  </form>
+</div>

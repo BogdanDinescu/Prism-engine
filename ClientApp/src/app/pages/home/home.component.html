@@ -1,8 +1,20 @@
-<div *ngFor="let article of articles">
-    <app-news-article
-    [title] = "article.title"
-    [imageUrl] = "article.imageUrl"
-    [content] = "article.content"
-    [link] = "article.link"
-    ></app-news-article>
- </div>
+<nav class="navigation">
+    <img class="logo" src="/assets/prism-only-logo.png">
+</nav>
+<nav class="source-list">
+    <div *ngFor="let source of sources">
+        <div class="source-item">
+            {{source}}
+        </div>
+    </div>
+</nav>
+<div class="content">
+    <div *ngFor="let article of articles">
+        <app-news-article
+        [title] = "article.title"
+        [imageUrl] = "article.imageUrl"
+        [content] = "article.content"
+        [link] = "article.link"
+        ></app-news-article>
+    </div>
+</div>
