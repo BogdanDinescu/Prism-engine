@@ -8,7 +8,6 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Prism.Data;
-using Microsoft.AspNetCore.Cors;
 
 namespace Prism.Controllers
 {

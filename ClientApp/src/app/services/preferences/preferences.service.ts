@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthentificationService } from '../auth/authentification.service'
+import { environment } from 'src/environments/environment';
+import { AuthentificationService } from '../auth/authentification.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NewsService {
+export class PreferencesService {
   private url: string = environment.url;
   constructor(private http: HttpClient, private auth: AuthentificationService) {}
 
@@ -20,13 +20,8 @@ export class NewsService {
     };
   }
 
-  getSources(): Observable<any> {
+  setNewsPreferences(data: any): Observable<any> {
     return this.http
-      .get(this.url + 'news/sources', this.getHeaders())
-  }
-
-  getNews(): Observable<any> {
-    return this.http
-      .get(this.url + 'news', this.getHeaders())
+      .post(this.url + 'preferences/news', data, this.getHeaders())
   }
 }

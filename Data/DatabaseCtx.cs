@@ -11,10 +11,14 @@ namespace Prism.Data
         }
     
         public DbSet<User> Users { get; set; }
+        public DbSet<NewsSource> NewsSources { get; set; }
+        public DbSet<UserPreference> UserPreferences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<NewsSource>().ToTable("NewsSources");
+            modelBuilder.Entity<UserPreference>().ToTable("UserPreferences");
         }
     }
 }

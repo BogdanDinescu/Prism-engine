@@ -26,7 +26,7 @@ namespace Prism
                 try
                 {
                     var context = services.GetRequiredService<DatabaseCtx>();
-                    DbInitializer.Initialize(context);
+                    context.Database.EnsureCreated();
                 }
                 catch (Exception ex)
                 {

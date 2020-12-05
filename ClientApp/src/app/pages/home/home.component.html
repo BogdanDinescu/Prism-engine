@@ -1,20 +1,31 @@
 <nav class="navigation">
     <img class="logo" src="/assets/prism-only-logo.png">
+    <button class="btn btn-secondary" (click)="logout()">Log out</button>
 </nav>
 <nav class="source-list">
     <div *ngFor="let source of sources">
-        <div class="source-item">
-            {{source}}
+        <div class="mr-1 ml-1" (click)="sourceClick(source.name)"
+        [ngClass]="source.selected ? 'btn btn-dark' : 'btn btn-outline-secondary'">
+            {{source.name}}
         </div>
     </div>
+    <button class="m-2 btn btn-primary" (click)="updateSources()" [disabled] = "loading">Save</button>
 </nav>
-<div class="content">
-    <div *ngFor="let article of articles">
-        <app-news-article
-        [title] = "article.title"
-        [imageUrl] = "article.imageUrl"
-        [content] = "article.content"
-        [link] = "article.link"
-        ></app-news-article>
+<div class="content" *ngIf="!loading">
+    <div class="row card-columns">
+        <div *ngFor="let article of articles">
+            <app-news-article
+            [title] = "article.title"
+            [source] = "article.source"
+            [imageUrl] = "article.imageUrl"
+            [content] = "article.content"
+            [link] = "article.link"
+            ></app-news-article>
+        </div>
+    </div>
+</div>
+<div class="text-center" *ngIf="loading">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
 </div>

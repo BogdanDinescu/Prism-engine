@@ -1,9 +1,10 @@
-<div class="card shadow p-3 mb-2 bg-white rounded" style="width: 20rem;">
+<div class="card shadow p-2 mb-2 bg-white rounded" style="width: 20em;">
     <a [href]="link" target="_blank">
       <img class="card-img-top" [src]="imageUrl" alt="Fara imagine">
     </a>
     <div class="card-body">
       <h5 class="card-title font-weight-bold">{{title}}</h5>
+      <a [href]="source" target="_blank"><h6 class="card-subtitle text-muted">{{source}}</h6></a>
       <p class="card-text">{{content}}</p>
       <a [href]="link" target="_blank">Citește mai mult</a>
     </div>

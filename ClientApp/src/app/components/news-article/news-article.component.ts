@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NewsArticleComponent implements OnInit {
 
   @Input('title') title: string;
+  @Input('source') source: string;
   @Input('imageUrl') imageUrl: string;
   @Input('content') content: string;
   @Input('link') link: string;

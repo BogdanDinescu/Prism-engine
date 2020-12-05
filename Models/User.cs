@@ -27,5 +27,7 @@ namespace Prism.Models
         public string Name { get; set; }
 
         public string Role { get; set; } = "user";
+
+        public virtual UserPreference UserPreference { get; set; }
     }
 }
