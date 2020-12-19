@@ -40,15 +40,11 @@ namespace Prism.Controllers
         {
             int userId = GetUserId();
             List<NewsSource> sources = database.UserPreferences.Where(u => u.UserId == userId).SelectMany(u => u.NewsSources).ToList();
-            List<NewsArticle> news = new List<NewsArticle>();
 
-            foreach (NewsSource source in sources)
-            {
-                news.AddRange(RSSReader.Read(source.Link));  
-            }
+            
             return Ok(new
             {
-                news
+                news = database.NewsArticles.Where(x => sources.Contains(x.NewsSource)).Select(x => new { x.Title, x.Source, x.Content, x.ImageUrl, x.Link}).ToList()
             });
         }
 

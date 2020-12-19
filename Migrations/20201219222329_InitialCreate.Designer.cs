@@ -10,7 +10,7 @@ using Prism.Data;
 namespace Prism.Migrations
 {
     [DbContext(typeof(DatabaseCtx))]
-    [Migration("20201205155127_InitialCreate")]
+    [Migration("20201219222329_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,38 @@ namespace Prism.Migrations
                     b.HasIndex("UserPreferencesUserId");
 
                     b.ToTable("NewsSourceUserPreference");
+                });
+
+            modelBuilder.Entity("Prism.Models.NewsArticle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NewsSourceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsSourceId");
+
+                    b.ToTable("NewsArticles");
                 });
 
             modelBuilder.Entity("Prism.Models.NewsSource", b =>
@@ -113,6 +145,15 @@ namespace Prism.Migrations
                         .HasForeignKey("UserPreferencesUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Prism.Models.NewsArticle", b =>
+                {
+                    b.HasOne("Prism.Models.NewsSource", "NewsSource")
+                        .WithMany()
+                        .HasForeignKey("NewsSourceId");
+
+                    b.Navigation("NewsSource");
                 });
 
             modelBuilder.Entity("Prism.Models.UserPreference", b =>

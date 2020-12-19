@@ -39,6 +39,30 @@ namespace Prism.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "NewsArticles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Link = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NewsSourceId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewsArticles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NewsArticles_NewsSources_NewsSourceId",
+                        column: x => x.NewsSourceId,
+                        principalTable: "NewsSources",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserPreferences",
                 columns: table => new
                 {
@@ -80,6 +104,11 @@ namespace Prism.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_NewsArticles_NewsSourceId",
+                table: "NewsArticles",
+                column: "NewsSourceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NewsSourceUserPreference_UserPreferencesUserId",
                 table: "NewsSourceUserPreference",
                 column: "UserPreferencesUserId");
@@ -87,6 +116,9 @@ namespace Prism.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "NewsArticles");
+
             migrationBuilder.DropTable(
                 name: "NewsSourceUserPreference");
 

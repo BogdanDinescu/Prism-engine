@@ -46,7 +46,6 @@ namespace Prism.Controllers
             if (userPreferences == null)
             {
                 userPreferences = new UserPreference { UserId = userId, NewsSources = newNewsSources};
-                database.UserPreferences.Add(userPreferences);
             }
             else
             {
