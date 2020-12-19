@@ -12,7 +12,7 @@
     <button class="m-2 btn btn-primary" (click)="updateSources()" [disabled] = "loading">Save</button>
 </nav>
 <div class="content" *ngIf="!loading">
-    <div class="row card-columns">
+    <div class="card-deck">
         <div *ngFor="let article of articles">
             <app-news-article
             [title] = "article.title"
