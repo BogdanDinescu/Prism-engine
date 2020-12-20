@@ -23,6 +23,12 @@
             ></app-news-article>
         </div>
     </div>
+    <div class="text-center m-2">
+        <button class="btn btn-primary" (click)="loadMore()" [disabled] = "loadingMore">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loadingMore"></span>
+            Încarcă mai multe
+        </button>
+    </div>
 </div>
 <div class="text-center" *ngIf="loading">
     <div class="spinner-border" role="status">

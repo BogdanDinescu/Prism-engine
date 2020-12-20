@@ -25,8 +25,8 @@ export class NewsService {
       .get(this.url + 'news/sources', this.getHeaders())
   }
 
-  getNews(): Observable<any> {
+  getNews(page: number=0): Observable<any> {
     return this.http
-      .get(this.url + 'news', this.getHeaders())
+      .get(this.url + 'news?page=' + page, this.getHeaders())
   }
 }

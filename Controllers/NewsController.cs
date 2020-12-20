@@ -36,15 +36,14 @@ namespace Prism.Controllers
 
         [HttpGet]
         // Get news
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] int page = 0)
         {
             int userId = GetUserId();
             List<NewsSource> sources = database.UserPreferences.Where(u => u.UserId == userId).SelectMany(u => u.NewsSources).ToList();
 
-            
             return Ok(new
             {
-                news = database.NewsArticles.Where(x => sources.Contains(x.NewsSource)).Select(x => new { x.Title, x.Source, x.Content, x.ImageUrl, x.Link}).ToList()
+                news = database.NewsArticles.Where(x => sources.Contains(x.NewsSource)).Select(x => new { x.Title, x.Source, x.Content, x.ImageUrl, x.Link}).Skip(page*20).Take(20).ToList()
             });
         }
 

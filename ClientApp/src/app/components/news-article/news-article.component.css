@@ -1,0 +1,19 @@
+.card {
+    width: 20em;
+    height: 600px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 14em;
+    object-fit: cover;
+}
+
+.card-footer {
+    height: 3em;
+}
+
+.card-body {
+    height: calc(600px - 3em - 14em);
+    overflow: auto;
+}

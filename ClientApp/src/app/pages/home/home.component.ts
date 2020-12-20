@@ -12,6 +12,9 @@ export class HomeComponent implements OnInit {
   public articles: any[];
   public sources: any[];
   public loading: boolean = true;
+  public loadingMore: boolean = false;
+  private page: number = 0;
+
   constructor(
     private news: NewsService,
     private preferences: PreferencesService,
@@ -50,7 +53,6 @@ export class HomeComponent implements OnInit {
     let ids = this.sources.filter(source => source.selected).map(source => source.id);
     this.preferences.setNewsPreferences(ids).subscribe(
       (res) => {
-
         this.news.getNews().subscribe(
           (res) => {
             this.articles = res.news;
@@ -61,6 +63,21 @@ export class HomeComponent implements OnInit {
           }
         );
 
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+  }
+
+  loadMore(): void {
+    this.loadingMore = true;
+    this.page = this.page + 1;
+    this.news.getNews(this.page).subscribe(
+      (res) => {
+        console.log(res)
+        this.articles = this.articles.concat(res.news);
+        this.loadingMore = false;
       },
       (err) => {
         console.log(err);
