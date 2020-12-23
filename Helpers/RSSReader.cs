@@ -10,7 +10,7 @@ namespace Prism.Helpers
 {
     public class RSSReader
     {
-        public static IEnumerable<NewsArticle> Read(string link, NewsSource newsSource)
+        public static List<NewsArticle> Read(string link, NewsSource newsSource)
         {       
             XmlReader reader = XmlReader.Create(link);
             SyndicationFeed feed = SyndicationFeed.Load(reader);
@@ -36,10 +36,25 @@ namespace Prism.Helpers
         {
             List<NewsSource> newsSources = databaseCtx.NewsSources.ToList();
             databaseCtx.NewsArticles.RemoveRange(databaseCtx.NewsArticles);
-            foreach (NewsSource source in newsSources)
+            List<List<NewsArticle>> newsArticles = new List<List<NewsArticle>>();
+            int maxim = 0;
+            for (int i = 0; i<newsSources.Count; i++)
             {
-                IEnumerable<NewsArticle> articles = Read(source.Link,source);
-                databaseCtx.NewsArticles.AddRange(articles);         
+                NewsSource source = newsSources[i];
+                List<NewsArticle> articles = Read(source.Link,source);
+                newsArticles.Add(articles);
+                if (articles.Count > maxim)
+                    maxim = articles.Count;
+            }
+            for (int j = 0; j < maxim; j++)
+            {
+                for (int i = 0; i < newsArticles.Count; i++)
+                {
+                    if (j < newsArticles[i].Count)
+                    {
+                        databaseCtx.NewsArticles.Add(newsArticles[i][j]);
+                    }
+                }
             }
             databaseCtx.SaveChanges();
             Debug.WriteLine("News read from " + newsSources.Count.ToString() + " sources");
