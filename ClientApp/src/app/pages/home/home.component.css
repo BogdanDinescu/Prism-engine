@@ -1,8 +1,10 @@
 .navigation {
     background-color: #404040;
     box-shadow: 5px 0px 5px grey;
-    height: 5em;
+    height: 7em;
     width: 100vw;
+    overflow: auto;
+    text-align: center;
 }
 
 .page {
@@ -13,6 +15,7 @@
 .logo {
     width: 5em;
     height: auto;
+    display: inline;
 }
 
 .content {
@@ -21,12 +24,53 @@
     overflow-y: scroll;
 }
 
+.side-bar-group {
+    display: inline;
+    white-space: nowrap;
+}
+
+.side-bar-item {
+    display: inline;
+    margin: 20px;
+    font-size: large;
+    font-weight: 700;
+    -webkit-text-stroke: 1px white;
+    transition-duration: 1s;
+    cursor: pointer;
+}
+
+.side-bar-item:hover {
+    -webkit-text-stroke: 1px yellow;
+}
+
+
 @media screen and (min-width: 768px) {
     .navigation {
         height: 100vh;
         width: 100px;
         float: left;
     }
+
+    .side-bar-group {
+        display: block;
+        transform: rotate(-90deg);
+        position: relative;
+        white-space: nowrap;
+        margin-top: 350px;
+    }
+
+    .side-bar-item {
+        display: inline;
+        font-size: x-large;
+        -webkit-text-stroke: 1px white;
+        transition-duration: 1s;
+        cursor: pointer;
+    }
+
+    .side-bar-item:hover {
+        -webkit-text-stroke: 1px yellow;
+    }
+
     .content {
         width: calc(100vw - 100px);
     }

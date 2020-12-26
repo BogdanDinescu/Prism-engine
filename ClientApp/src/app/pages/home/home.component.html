@@ -1,7 +1,13 @@
 <div class="page">
     <nav class="navigation">
         <img class="logo" src="/assets/prism-only-logo.png">
-        <button class="btn btn-secondary" (click)="logout()">Log out</button>
+        <button class="btn btn-secondary m-2">Settings</button>
+        <button class="btn btn-secondary m-2" (click)="logout()">Log out</button>
+        <div class="side-bar-group">
+            <div class="side-bar-item">News</div>
+            <div class="side-bar-item">Social Media</div>
+            <div class="side-bar-item">Meteo</div>
+        </div>
     </nav>
     <div class="text-center" *ngIf="loading">
         <div class="spinner-border" role="status">
