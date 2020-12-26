@@ -1,0 +1,29 @@
+<nav class="source-list">
+    <div *ngFor="let source of sources">
+        <div class="mr-1 ml-1" (click)="sourceClick(source.name)"
+        [ngClass]="source.selected ? 'btn btn-dark' : 'btn btn-outline-secondary'">
+            {{source.name}}
+        </div>
+    </div>
+    <button class="m-2 btn btn-primary" (click)="updateSources()">Save</button>
+</nav>
+<div class="text-center text-muted" *ngIf="noSources">
+    Nici o sursă selectată!    
+</div>
+<div class="card-deck">
+    <div *ngFor="let article of articles">
+        <app-news-article
+        [title] = "article.title"
+        [source] = "article.source"
+        [imageUrl] = "article.imageUrl"
+        [content] = "article.content"
+        [link] = "article.link"
+        ></app-news-article>
+    </div>
+</div>
+<div class="text-center m-2" *ngIf="!noSources">
+    <button class="btn btn-primary" (click)="loadMore()" [disabled] = "loadingMore">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loadingMore"></span>
+        Încarcă mai multe
+    </button>
+</div>

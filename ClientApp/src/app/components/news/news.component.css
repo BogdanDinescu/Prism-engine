@@ -1,0 +1,12 @@
+.source-list {
+    height: 5em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    overflow: scroll;
+    background-color: seashell;
+}
+
+.card-deck {
+    justify-content: center;
+}

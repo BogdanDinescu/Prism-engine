@@ -4,37 +4,21 @@
     height: 5em;
     width: 100vw;
 }
-  
+
+.page {
+    width: 100vw;
+    height: 100vh;
+}
+
 .logo {
     width: 5em;
     height: auto;
 }
 
 .content {
-    padding-left: 3vw;
-    padding-top: 10px;
     width: 100vw;
-    height: calc(100vh - 10em);
+    height: 100vh;
     overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.source-list {
-    height: 5em;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    overflow: scroll;
-    background-color: seashell;
-}
-
-.source-item {
-    border: 1px solid black;
-    border-radius: 360px;
-    padding: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-    background-color: lightskyblue;
 }
 
 @media screen and (min-width: 768px) {
@@ -45,6 +29,5 @@
     }
     .content {
         width: calc(100vw - 100px);
-        height: calc(100vh - 5em);
     }
 }
