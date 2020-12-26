@@ -23,7 +23,11 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.router.navigate(['/login'])
+  }
+
+  settings() {
+    this.router.navigate(['/settings'])
   }
 }

@@ -1,11 +1,11 @@
 <nav class="source-list">
+    <button class="m-2 btn btn-primary" (click)="updateSources()">Save</button>
     <div *ngFor="let source of sources">
         <div class="mr-1 ml-1" (click)="sourceClick(source.name)"
         [ngClass]="source.selected ? 'btn btn-dark' : 'btn btn-outline-secondary'">
             {{source.name}}
         </div>
     </div>
-    <button class="m-2 btn btn-primary" (click)="updateSources()">Save</button>
 </nav>
 <div class="text-center text-muted" *ngIf="noSources">
     Nici o sursă selectată!    

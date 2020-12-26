@@ -28,6 +28,14 @@ export class AuthentificationService {
     return localStorage.getItem('token');
   }
 
+  getName(): string {
+    return localStorage.getItem('name');
+  }
+
+  isAdmin(): boolean {
+    return localStorage.getItem('role') === 'admin';
+  }
+
   register(data: any): Observable<any> {
     return this.http
       .post(this.url + 'user/register', data, this.getHeaders())
@@ -42,6 +50,8 @@ export class AuthentificationService {
       .pipe(
         tap((response) => {
           localStorage.setItem('token', response.token);
+          localStorage.setItem('name', response.name);
+          localStorage.setItem('role', response.role);
         })
       );
   }

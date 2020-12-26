@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AuthentificationService } from 'src/app/services/auth/authentification.service';
 import { NewsService } from 'src/app/services/news/news.service';
 import { PreferencesService } from 'src/app/services/preferences/preferences.service';
 
@@ -20,6 +21,7 @@ export class NewsComponent implements OnInit {
   constructor(
     private news: NewsService,
     private preferences: PreferencesService,
+    private auth: AuthentificationService
     ) { }
 
   ngOnInit(): void {

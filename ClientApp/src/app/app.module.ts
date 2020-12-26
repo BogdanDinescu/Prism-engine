@@ -10,6 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NewsArticleComponent } from './components/news-article/news-article.component';
 import { NewsComponent } from './components/news/news.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NewsComponent } from './components/news/news.component';
     RegisterComponent,
     HomeComponent,
     NewsArticleComponent,
-    NewsComponent
+    NewsComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
