@@ -25,6 +25,11 @@ export class NewsService {
       .get(this.url + 'news/sources', this.getHeaders())
   }
 
+  postSource(data: any): Observable<any> {
+    return this.http
+      .post(this.url + 'news/sources', data, this.getHeaders())
+  }
+
   getNews(page: number=0): Observable<any> {
     return this.http
       .get(this.url + 'news?page=' + page, this.getHeaders())
