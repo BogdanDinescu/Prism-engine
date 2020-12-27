@@ -21,13 +21,19 @@ export class NewsService {
   }
 
   getSources(): Observable<any> {
-    return this.http
-      .get(this.url + 'news/sources', this.getHeaders())
+    return this.http.get(this.url + 'news/sources', this.getHeaders())
   }
 
   postSource(data: any): Observable<any> {
-    return this.http
-      .post(this.url + 'news/sources', data, this.getHeaders())
+    return this.http.post(this.url + 'news/sources', data, this.getHeaders())
+  }
+
+  deleteSource(id: Number): Observable<any> {
+    return this.http.delete(this.url + 'news/sources?id=' + id, this.getHeaders())
+  }
+
+  modifySource(data: any): Observable<any> {
+    return this.http.put(this.url + 'news/sources', data, this.getHeaders())
   }
 
   getNews(page: number=0): Observable<any> {

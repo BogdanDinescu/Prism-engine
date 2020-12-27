@@ -90,12 +90,12 @@ namespace Prism.Controllers
 
             database.Entry(s).CurrentValues.SetValues(source);
             database.SaveChanges();
-            return Ok();
+            return Ok(source);
         }
 
         [HttpDelete]
         [Route("sources")]
-        public IActionResult DeleteSource(int id)
+        public IActionResult DeleteSource([FromQuery] int id)
         {
 
             var s = database.NewsSources.Find(id);
@@ -106,12 +106,8 @@ namespace Prism.Controllers
                 database.SaveChanges();
                 return Ok();
             }
-            else
-            {
-                return NotFound("Source not found");
-            }
+            return NotFound("Source not found with id " + id);
         }
-
 
     }
 }

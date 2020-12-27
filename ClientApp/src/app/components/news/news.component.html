@@ -1,11 +1,15 @@
 <nav class="source-list">
-    <button class="m-2 btn btn-primary" *ngIf="auth.isAdmin()" (click)="open(addModal)">Adaugă</button>
+    <button class="m-2 btn btn-primary" *ngIf="auth.isAdmin()" (click)="openAddSourceModal()">Adaugă</button>
     <button class="m-2 btn btn-primary" (click)="updateSources()">Save</button>
     <div *ngFor="let source of sources">
         <div class="mr-1 ml-1" (click)="sourceClick(source.name)"
         [ngClass]="source.selected ? 'btn btn-dark' : 'btn btn-outline-secondary'">
             {{source.name}}
         </div>
+        <span *ngIf="auth.isAdmin()">
+            <sup><button class="badge badge-danger" (click)="deleteSource(source.id)">Sterge</button></sup>
+            <sub><button class="badge badge-info" (click)="openModifySourceModal(source)">Modifică</button></sub>
+        </span>
     </div>
 </nav>
 <div class="text-center text-muted" *ngIf="noSources">
@@ -28,45 +32,3 @@
         Încarcă mai multe
     </button>
 </div>
-
-<ng-template #addModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Adaugă o sursă</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-        <span aria-hidden="true">×</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <form [formGroup]="sourceForm" class="col-12 col-md-6">
-            <div class="form-group">
-                <label>Nume sursă</label>
-                <input
-                    class="form-control"
-                    placeholder="Nume sursă ..."
-                    formControlName="Name"
-                />
-                <span 
-                    class="text-danger"
-                    *ngIf="!sourceForm.controls.Name.pristine && sourceForm.controls.Name.status === 'INVALID'"
-                >Name is invalid</span>
-            </div>
-            <div class="form-group">
-                <label>Link sursă</label>
-                <input
-                    class="form-control"
-                    placeholder="Link sursă ..."
-                    formControlName="Link"
-                />
-                <span 
-                    class="text-danger"
-                    *ngIf="!sourceForm.controls.Link.pristine && sourceForm.controls.Link.status === 'INVALID'"
-                >Link is invalid</span>
-            </div>
-        </form>
-        
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Renunță</button>
-      <button type="submit" class="btn btn-outline-primary" (click)="addSource()">Adaugă</button>
-    </div>
-</ng-template>

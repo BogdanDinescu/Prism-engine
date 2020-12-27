@@ -11,6 +11,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { NewsArticleComponent } from './components/news-article/news-article.component';
 import { NewsComponent } from './components/news/news.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { AddSourceModalComponent } from './components/add-source-modal/add-source-modal.component';
+import { ModifySourceModalComponent } from './components/modify-source-modal/modify-source-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { SettingsComponent } from './pages/settings/settings.component';
     HomeComponent,
     NewsArticleComponent,
     NewsComponent,
-    SettingsComponent
+    SettingsComponent,
+    AddSourceModalComponent,
+    ModifySourceModalComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +35,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
     NgbModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ AddSourceModalComponent, ModifySourceModalComponent ]
 })
 export class AppModule { }

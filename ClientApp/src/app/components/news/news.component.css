@@ -11,3 +11,12 @@
     justify-content: center;
     width: 100%;
 }
+
+span {
+    position: relative;
+    display: inline-block;
+}
+span sup {
+    position: absolute;
+    left: 0;
+}
