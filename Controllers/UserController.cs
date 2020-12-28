@@ -70,26 +70,62 @@ namespace Prism.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            var user = userService.GetById(id);
-            return Ok(user);
-        }
-
-
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] User user)
+        [HttpGet]
+        public IActionResult GetCurrentUser()
         {
             try
             {
-                userService.Update(user, user.Password);
-                return Ok();
+                int id = GetUserId();
+                var user = userService.GetById(id);
+                return Ok(new {
+                    id = user.UserId,
+                    email = user.Email,
+                    name = user.Name,
+                    role = user.Role,
+                });
+            }
+            catch (ApplicationException)
+            {
+                return NotFound("User not  found");
+            }
+        }
+
+        [HttpPut]
+        public IActionResult Update([FromBody] UserUpdate newUser)
+        {
+            try
+            {
+                int id = GetUserId();
+                var user = userService.Update(id,newUser);
+                return Ok(new
+                {
+                    id = user.UserId,
+                    email = user.Email,
+                    name = user.Name,
+                    role = user.Role,
+                });
             }
             catch (ApplicationException ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        [HttpPut]
+        [Route("change-password")]
+        public IActionResult UpdatePassword([FromBody] ChangePasswordModel passwords)
+        {
+            try
+            {
+                int id = GetUserId();
+                userService.UpdatePassword(id, passwords.OldPassword, passwords.NewPassword);
+                return Ok();
+            }
+            catch (ApplicationException e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+            
         }
 
         [Authorize(Roles = Role.Admin)]
@@ -98,6 +134,18 @@ namespace Prism.Controllers
         {
             userService.Delete(id);
             return Ok();
+        }
+
+        private int GetUserId()
+        {
+            try
+            {
+                return Int32.Parse(User.FindFirst(ClaimTypes.Name)?.Value);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException("UserId was not found");
+            }
         }
     }
 }

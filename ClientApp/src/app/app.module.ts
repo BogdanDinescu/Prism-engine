@@ -14,6 +14,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { AddSourceModalComponent } from './components/add-source-modal/add-source-modal.component';
 import { ModifySourceModalComponent } from './components/modify-source-modal/modify-source-modal.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { ChangePasswordModalComponent } from './components/change-password-modal/change-password-modal.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
     SettingsComponent,
     AddSourceModalComponent,
     ModifySourceModalComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    ChangePasswordModalComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,6 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [ AddSourceModalComponent, ModifySourceModalComponent ]
+  entryComponents: [ AddSourceModalComponent, ModifySourceModalComponent, ChangePasswordModalComponent ]
 })
 export class AppModule { }

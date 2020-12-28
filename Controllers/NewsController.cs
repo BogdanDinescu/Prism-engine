@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Prism.Data;
+using Prism.Helpers;
 using Prism.Models;
 using System;
 using System.Collections.Generic;
@@ -109,5 +110,13 @@ namespace Prism.Controllers
             return NotFound("Source not found with id " + id);
         }
 
+        // to be deleted
+        [HttpGet]
+        [Route("load-new")]
+        public IActionResult LoadNewNews()
+        {
+            RSSReader.ReadAllAndStore(database);
+            return Ok();
+        }
     }
 }

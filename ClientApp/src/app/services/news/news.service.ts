@@ -37,7 +37,11 @@ export class NewsService {
   }
 
   getNews(page: number=0): Observable<any> {
-    return this.http
-      .get(this.url + 'news?page=' + page, this.getHeaders())
+    return this.http.get(this.url + 'news?page=' + page, this.getHeaders())
+  }
+
+  // to be deleted
+  loadNewNews(): Observable<any> {
+    return this.http.get(this.url + 'news/load-new', this.getHeaders());
   }
 }

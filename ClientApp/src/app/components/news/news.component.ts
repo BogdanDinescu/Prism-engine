@@ -144,7 +144,6 @@ export class NewsComponent implements OnInit {
     this.page = this.page + 1;
     this.news.getNews(this.page).subscribe(
       (res) => {
-        console.log(res)
         this.articles = this.articles.concat(res.news);
         this.loadingMore = false;
       },
@@ -152,6 +151,11 @@ export class NewsComponent implements OnInit {
         console.log(err);
       }
     )
+  }
+
+  // to be deleted
+  loadNewNews(): void {
+    this.news.loadNewNews().subscribe();
   }
 
 }

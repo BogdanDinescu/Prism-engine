@@ -20,6 +20,15 @@ export class AuthentificationService {
     };
   }
 
+  private getHeadersWithCredentials() {
+    return {
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        'authorization': 'Bearer ' + this.getToken(),
+      })
+    };
+  }
+
   isAuthenticated(): boolean {
     return localStorage.getItem('token') !== null
   }
@@ -28,12 +37,20 @@ export class AuthentificationService {
     return localStorage.getItem('token');
   }
 
-  getName(): string {
-    return localStorage.getItem('name');
-  }
-
   isAdmin(): boolean {
     return localStorage.getItem('role') === 'admin';
+  }
+
+  getUser(): Observable<any> {
+    return this.http.get(this.url + 'user',this.getHeadersWithCredentials())
+  }
+
+  updateUser(data: any): Observable<any> {
+    return this.http.put(this.url + 'user', data, this.getHeadersWithCredentials())
+  }
+
+  changePassword(data: any): Observable<any> {
+    return this.http.put(this.url + 'user/change-password', data, this.getHeadersWithCredentials());
   }
 
   register(data: any): Observable<any> {

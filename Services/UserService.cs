@@ -9,7 +9,8 @@ namespace Prism.Services
     {
         User Authenticate(string email, string password);
         User Register(User user, string password);
-        void Update(User newUser, string password);
+        void UpdatePassword(int id, string oldPassword, string newPassword);
+        User Update(int id, UserUpdate newUser);
         void Delete(int id);
         User GetById(int id);
     }
@@ -58,16 +59,37 @@ namespace Prism.Services
             return context.Users.Find(id);
         }
 
-        public void Update(User newUser, string password)
+        public void UpdatePassword(int id, string oldPassword, string newPassword)
         {
-            var user = context.Users.Find(newUser.UserId);
+            var user = context.Users.Find(id);
 
             if (user == null)
                 throw new ApplicationException("User not found");
 
-            context.Users.Update(newUser);
-            context.SaveChanges();
+            if (!VerifyPassword(oldPassword, user.Password, user.Salt))
+                throw new ApplicationException("Old password is not corect");
 
+            var pair = PasswordHash(newPassword);
+
+            user.Password = pair.Item1;
+            user.Salt = pair.Item2;
+
+            context.Users.Update(user);
+            context.SaveChanges();
+        }
+
+        public User Update(int id, UserUpdate newUser)
+        {
+            var user = context.Users.Find(id);
+
+            if (user == null)
+                throw new ApplicationException("User not found");
+
+            user.Name = newUser.Name;
+            context.Users.Update(user);
+
+            context.SaveChanges();
+            return user;
         }
 
         public void Delete(int id)

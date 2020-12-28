@@ -1,4 +1,5 @@
 <nav class="source-list">
+    <button class="m-2 btn btn-danger" *ngIf="auth.isAdmin()" (click)="loadNewNews()">Load new</button>
     <button class="m-2 btn btn-primary" *ngIf="auth.isAdmin()" (click)="openAddSourceModal()">Adaugă</button>
     <button class="m-2 btn btn-primary" (click)="updateSources()">Save</button>
     <div *ngFor="let source of sources">
