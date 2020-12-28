@@ -13,6 +13,7 @@ import { NewsComponent } from './components/news/news.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { AddSourceModalComponent } from './components/add-source-modal/add-source-modal.component';
 import { ModifySourceModalComponent } from './components/modify-source-modal/modify-source-modal.component';
+import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ModifySourceModalComponent } from './components/modify-source-modal/mod
     NewsComponent,
     SettingsComponent,
     AddSourceModalComponent,
-    ModifySourceModalComponent
+    ModifySourceModalComponent,
+    NotFoundPageComponent
   ],
   imports: [
     BrowserModule,
