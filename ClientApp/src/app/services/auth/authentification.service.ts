@@ -48,6 +48,10 @@ export class AuthentificationService {
   updateUser(data: any): Observable<any> {
     return this.http.put(this.url + 'user', data, this.getHeadersWithCredentials())
   }
+  
+  deleteUser(): Observable<any> {
+    return this.http.delete(this.url + 'user',this.getHeadersWithCredentials())
+  }
 
   changePassword(data: any): Observable<any> {
     return this.http.put(this.url + 'user/change-password', data, this.getHeadersWithCredentials());

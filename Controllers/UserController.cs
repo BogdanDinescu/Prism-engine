@@ -128,12 +128,19 @@ namespace Prism.Controllers
             
         }
 
-        [Authorize(Roles = Role.Admin)]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete()
         {
-            userService.Delete(id);
-            return Ok();
+            try
+            {
+                int id = GetUserId();
+                userService.Delete(id);
+                return Ok();
+            }
+            catch (ApplicationException e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
         }
 
         private int GetUserId()

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChangePasswordModalComponent } from 'src/app/components/change-password-modal/change-password-modal.component';
 import { User } from 'src/app/models/User';
@@ -20,6 +21,7 @@ export class SettingsComponent implements OnInit {
   errorMessage: string = "";
 
   constructor(
+    private router: Router,
     public auth: AuthentificationService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
@@ -76,6 +78,20 @@ export class SettingsComponent implements OnInit {
             
         }
       );
+    }
+  }
+
+  deleteUser() {
+    if(confirm("Contul va fi șters și toate datele asociate lui. Sunteți sigur?")) {
+      this.auth.deleteUser().subscribe(
+        (res) => {
+          localStorage.clear();
+          this.router.navigate(['/login']);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
     }
   }
 
