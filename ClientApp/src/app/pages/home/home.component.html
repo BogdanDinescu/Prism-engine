@@ -4,8 +4,8 @@
         <button class="btn btn-secondary m-2" (click)="settings()">Settings</button>
         <button class="btn btn-secondary m-2" (click)="logout()">Log out</button>
         <div class="side-bar-group">
-            <div class="side-bar-item">News</div>
-            <div class="side-bar-item">Social Media</div>
+            <div class="side-bar-item" (click)="doOpen('news')">News</div>
+            <div class="side-bar-item" (click)="doOpen('social')">Social Media</div>
             <div class="side-bar-item">Meteo</div>
         </div>
     </nav>
@@ -15,7 +15,8 @@
         </div>
     </div>
     <div class="content" [style.visibility]="loading ? 'hidden' : 'visible'">
-        <app-news (loadingChange)="update($event)"></app-news>
+        <app-news (loadingChange)="update($event)" *ngIf="open === 'news'"></app-news>
+        <app-posts (lodingChange)="update($event)" *ngIf="open === 'social'"></app-posts>
     </div>
 </div>
 

@@ -1,0 +1,60 @@
+<div>
+<div class="alert alert-danger">{{alertMessage}}</div>
+<div class="col-12 col-md-6 list-group float-left" *ngFor="let post of posts">
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{post.caption}}</h5>
+        <small>{{post.name}}</small>
+      </div>
+      <img class="postImg" [src]="post.imageUrl"/>
+      <span>
+        <button class="badge badge-danger" (click)="doDelete(post.id)">Sterge</button>
+        <button class="badge badge-info" (click)="doUpdate(post)">Modifică</button>
+    </span>
+    </div>
+</div>
+<form [formGroup]="postForm" (ngSubmit)="doPost()" class="col-12 col-md-6 float-right">
+    <h1>Add/Update post</h1>
+    <div class="form-group">
+      <label>Caption</label>
+      <input
+          class="form-control"
+          placeholder="Caption..."
+          formControlName="Caption"
+      />
+      <span 
+          class="text-danger" 
+          *ngIf="!postForm.controls.Caption.pristine && postForm.controls.Caption.status === 'INVALID'"
+      >Caption is invalid</span>
+    </div>
+    <div class="form-group">
+        <label>Image Link</label>
+        <input
+            class="form-control"
+            placeholder="ImageUrl..."
+            formControlName="ImageUrl"
+        />
+        <span 
+            class="text-danger" 
+            *ngIf="!postForm.controls.ImageUrl.pristine && postForm.controls.ImageUrl.status === 'INVALID'"
+        >Caption is invalid</span>
+      </div>
+
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="postForm.status === 'INVALID'"
+    >
+      {{buttonState}}
+    </button>
+    <br>
+    <span 
+          class="text-danger" 
+          *ngIf="errorMessage.length"
+      >{{errorMessage}}</span>
+    <span 
+          class="text-success" 
+          *ngIf="success"
+      >Post successful!</span>
+</form>
+</div>

@@ -11,6 +11,8 @@ namespace Prism.Models
         {
             var user = (User)validationContext.ObjectInstance;
             string email = user.Email;
+            if (email == null)
+                return new ValidationResult("Email is null");
 
             Regex rx = new Regex(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}",RegexOptions.IgnoreCase);
             MatchCollection matches = rx.Matches(email);

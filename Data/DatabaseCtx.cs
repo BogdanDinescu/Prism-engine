@@ -15,12 +15,15 @@ namespace Prism.Data
         public DbSet<NewsArticle> NewsArticles { get; set; }
         public DbSet<UserPreference> UserPreferences { get; set; }
 
+        public DbSet<Post> Posts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<NewsSource>().ToTable("NewsSources");
             modelBuilder.Entity<NewsArticle>().ToTable("NewsArticles");
             modelBuilder.Entity<UserPreference>().ToTable("UserPreferences");
+            modelBuilder.Entity<Post>().ToTable("Posts");
         }
     }
 }

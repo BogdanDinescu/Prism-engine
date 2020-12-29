@@ -10,7 +10,7 @@ using Prism.Data;
 namespace Prism.Migrations
 {
     [DbContext(typeof(DatabaseCtx))]
-    [Migration("20201219222329_InitialCreate")]
+    [Migration("20201229153012_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,6 +90,30 @@ namespace Prism.Migrations
                     b.ToTable("NewsSources");
                 });
 
+            modelBuilder.Entity("Prism.Models.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Caption")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("Prism.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -154,6 +178,15 @@ namespace Prism.Migrations
                         .HasForeignKey("NewsSourceId");
 
                     b.Navigation("NewsSource");
+                });
+
+            modelBuilder.Entity("Prism.Models.Post", b =>
+                {
+                    b.HasOne("Prism.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Prism.Models.UserPreference", b =>
