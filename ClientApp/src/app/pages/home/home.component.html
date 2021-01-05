@@ -1,22 +1,21 @@
-<div class="page">
-    <nav class="navigation">
-        <img class="logo" src="/assets/prism-only-logo.png">
-        <button class="btn btn-secondary m-2" (click)="settings()">Settings</button>
-        <button class="btn btn-secondary m-2" (click)="logout()">Log out</button>
-        <div class="side-bar-group">
-            <div class="side-bar-item" (click)="doOpen('news')">News</div>
-            <div class="side-bar-item" (click)="doOpen('social')">Social Media</div>
-            <div class="side-bar-item">Meteo</div>
-        </div>
-    </nav>
-    <div class="text-center" *ngIf="loading">
-        <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
-        </div>
+<nav class="navigation">
+    <img class="logo" src="/assets/prism-only-logo.png">
+    <button class="btn btn-secondary m-2" (click)="settings()">Settings</button>
+    <button class="btn btn-secondary m-2" (click)="logout()">Log out</button>
+    <div class="side-bar-group">
+        <div class="side-bar-item" (click)="doOpen('news')">News</div>
+        <div class="side-bar-item" (click)="doOpen('social')">Social Media</div>
+        <div class="side-bar-item">Meteo</div>
     </div>
-    <div class="content" [style.visibility]="loading ? 'hidden' : 'visible'">
-        <app-news (loadingChange)="update($event)" *ngIf="open === 'news'"></app-news>
-        <app-posts (lodingChange)="update($event)" *ngIf="open === 'social'"></app-posts>
+</nav>
+<div class="text-center" *ngIf="loading">
+    <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
     </div>
 </div>
+<div class="content" [style.visibility]="loading ? 'hidden' : 'visible'">
+    <app-news (loadingChange)="update($event)" *ngIf="open === 'news'"></app-news>
+    <app-posts (lodingChange)="update($event)" *ngIf="open === 'social'"></app-posts>
+</div>
+
 

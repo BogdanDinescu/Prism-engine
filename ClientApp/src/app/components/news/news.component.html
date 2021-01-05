@@ -16,7 +16,7 @@
 <div class="text-center text-muted" *ngIf="noSources">
     Nici o sursă selectată!    
 </div>
-<div class="card-deck">
+<div class="d-flex flex-column align-items-center">
     <div *ngFor="let article of articles">
         <app-news-article
         [title] = "article.title"

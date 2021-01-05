@@ -7,11 +7,6 @@
     background-color: seashell;
 }
 
-.card-deck {
-    justify-content: center;
-    width: 100%;
-}
-
 span {
     position: relative;
     display: inline-block;

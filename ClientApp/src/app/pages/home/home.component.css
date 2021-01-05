@@ -5,11 +5,8 @@
     width: 100vw;
     overflow: auto;
     text-align: center;
-}
-
-.page {
-    width: 100vw;
-    height: 100vh;
+    position: fixed;
+    z-index: 1;
 }
 
 .logo {
@@ -19,9 +16,8 @@
 }
 
 .content {
+    padding-top: 7em;
     width: 100vw;
-    height: 100vh;
-    overflow-y: scroll;
 }
 
 .side-bar-group {
@@ -72,6 +68,8 @@
     }
 
     .content {
-        width: calc(100vw - 100px);
+        padding-top: 0;
+        width: calc(100vw - 120px);
+        float: right;
     }
 }
