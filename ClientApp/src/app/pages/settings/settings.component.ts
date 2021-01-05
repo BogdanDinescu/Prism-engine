@@ -31,6 +31,7 @@ export class SettingsComponent implements OnInit {
     this.auth.getUser().subscribe(
       (res) => {
         this.user = res;
+        this.userForm.setValue({Name: res.name})
       }
     )
   }
