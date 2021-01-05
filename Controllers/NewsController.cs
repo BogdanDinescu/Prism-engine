@@ -72,6 +72,7 @@ namespace Prism.Controllers
 
         [HttpPost]
         [Route("sources")]
+        [Authorize(Roles = "admin")]
         public IActionResult AddSource([FromBody] NewsSource source)
         {
             database.NewsSources.Add(source);
@@ -81,6 +82,7 @@ namespace Prism.Controllers
 
         [HttpPut]
         [Route("sources")]
+        [Authorize(Roles = "admin")]
         public IActionResult ModifySource([FromBody] NewsSource source)
         {
 
@@ -96,6 +98,7 @@ namespace Prism.Controllers
 
         [HttpDelete]
         [Route("sources")]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteSource([FromQuery] int id)
         {
 
