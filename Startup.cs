@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Prism.Data;
 using Prism.Services;
+using System;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,15 +26,18 @@ namespace Prism
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddDbContext<DatabaseCtx>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             // configure database
             services.AddDbContext<DatabaseCtx>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 0))));
 
             // configure acces from different port
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowOrigin",
-                  builder => builder.WithOrigins("http://localhost:4200")
+                  builder => builder.WithOrigins("http://localhost:4200", "https://prism.cleverapps.io/")
                   .AllowAnyMethod()
                   .AllowAnyHeader()
                   .AllowCredentials());
