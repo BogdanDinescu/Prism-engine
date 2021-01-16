@@ -37,7 +37,7 @@ namespace Prism
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowOrigin",
-                  builder => builder.AllowAnyOrigin()
+                  builder => builder.WithOrigins("http://localhost:4200", "https://prism.cleverapps.io")
                   .AllowAnyMethod()
                   .AllowAnyHeader()
                   .AllowCredentials());
