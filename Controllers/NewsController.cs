@@ -43,7 +43,9 @@ namespace Prism.Controllers
 
             return Ok(new
             {
-                news = database.NewsArticles.Where(x => sources.Contains(x.NewsSource)).Select(x => new { x.Title, x.Source, x.Content, x.ImageUrl, x.Link}).Skip(page*20).Take(20).ToList()
+                news = database.NewsArticles.Where(x => sources.Contains(x.NewsSource))
+                    .Select(x => new { x.Id, x.Title, x.Source, x.Content, x.ImageUrl, x.Link})
+                    .Skip(page*20).Take(20).OrderBy(x => x.Id).ToList()
             });
         }
 
