@@ -22,10 +22,10 @@ namespace Prism.Helpers
             {
                 articles.Add(new NewsArticle {
                     Title = item.Title.Text,
-                    Source = feed.Links[0].Uri.ToString(),
-                    Link = item.Links[0].Uri.ToString(),
+                    Source = feed.Links.Count >= 1 ? feed.Links[0].Uri.ToString():"",
+                    Link = item.Links.Count >= 1 ? item.Links[0].Uri.ToString(): "",
                     Content = item.Summary.Text,
-                    ImageUrl = item.Links[1].Uri.ToString(),
+                    ImageUrl = item.Links.Count >= 2 ? item.Links[1].Uri.ToString():"",
                     NewsSource = newsSource
                 });
             }
