@@ -9,7 +9,7 @@ using Prism.Data;
 namespace Prism.Migrations
 {
     [DbContext(typeof(DatabaseCtx))]
-    [Migration("20210117143001_InitialCreate")]
+    [Migration("20210224182239_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace Prism.Migrations
                     b.Property<string>("Link")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("NewsSourceId")
+                    b.Property<int>("NewsSourceId")
                         .HasColumnType("int");
 
                     b.Property<string>("Source")
@@ -146,7 +146,9 @@ namespace Prism.Migrations
                 {
                     b.HasOne("Prism.Models.NewsSource", "NewsSource")
                         .WithMany()
-                        .HasForeignKey("NewsSourceId");
+                        .HasForeignKey("NewsSourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("NewsSource");
                 });

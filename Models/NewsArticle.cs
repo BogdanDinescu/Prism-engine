@@ -13,6 +13,7 @@ namespace Prism.Models
         public string Link { get; set; }
         public string ImageUrl { get; set; }
         public string Content { get; set; }
+        public int NewsSourceId { get; set; }
         public NewsSource NewsSource { get; set; }
 
     }

@@ -50,7 +50,7 @@ namespace Prism.Migrations
                     Link = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     ImageUrl = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     Content = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    NewsSourceId = table.Column<int>(type: "int", nullable: true)
+                    NewsSourceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,7 +60,7 @@ namespace Prism.Migrations
                         column: x => x.NewsSourceId,
                         principalTable: "NewsSources",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
