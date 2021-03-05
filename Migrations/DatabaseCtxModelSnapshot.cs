@@ -50,6 +50,9 @@ namespace Prism.Migrations
                     b.Property<int>("NewsSourceId")
                         .HasColumnType("int");
 
+                    b.Property<uint>("SimHash")
+                        .HasColumnType("int unsigned");
+
                     b.Property<string>("Source")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -59,6 +62,8 @@ namespace Prism.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NewsSourceId");
+
+                    b.HasIndex("SimHash");
 
                     b.ToTable("NewsArticles");
                 });

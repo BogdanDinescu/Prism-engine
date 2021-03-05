@@ -46,6 +46,7 @@ namespace Prism.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
+                    SimHash = table.Column<uint>(type: "int unsigned", nullable: false),
                     Source = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     Link = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     ImageUrl = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
@@ -108,6 +109,11 @@ namespace Prism.Migrations
                 name: "IX_NewsArticles_NewsSourceId",
                 table: "NewsArticles",
                 column: "NewsSourceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsArticles_SimHash",
+                table: "NewsArticles",
+                column: "SimHash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NewsSourceUserPreference_UserPreferencesUserId",

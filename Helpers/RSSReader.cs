@@ -22,6 +22,7 @@ namespace Prism.Helpers
             {
                 articles.Add(new NewsArticle {
                     Title = item.Title.Text,
+                    SimHash = SimHash.SimHashOfString(item.Title.Text),
                     Source = feed.Links.Count >= 1 ? feed.Links[0].Uri.ToString():"",
                     Link = item.Links.Count >= 1 ? item.Links[0].Uri.ToString(): "",
                     Content = item.Summary.Text,
