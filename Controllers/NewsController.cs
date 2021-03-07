@@ -50,6 +50,20 @@ namespace Prism.Controllers
         }
 
         [HttpGet]
+        [Route("search")]
+        public IActionResult Search([FromQuery] string searchQuery)
+        {
+            if (searchQuery == null || searchQuery.Length.Equals(0))
+            {
+                return NoContent();
+            }
+            return Ok(new
+            {
+                news = database.NewsArticles.Where(a => a.Title.Contains(searchQuery)).OrderBy(x => x.Id).Take(50).ToList()
+            });
+        }
+
+        [HttpGet]
         [Route("sources")]
         // Get sources
         public IActionResult GetSources()
