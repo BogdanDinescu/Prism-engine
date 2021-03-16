@@ -80,6 +80,7 @@ namespace Prism.Controllers
                 {
                     id = newsSource.Id,
                     name = newsSource.Name,
+                    link = newsSource.Link,
                     selected = preferedNewsSources.Contains(newsSource)
                 });
             }
