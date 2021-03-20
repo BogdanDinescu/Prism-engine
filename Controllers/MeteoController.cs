@@ -14,25 +14,26 @@ namespace Prism.Controllers
     {
         
         static readonly HttpClient client = new HttpClient();
-        
+        private string url = "https://api.weatherbit.io/v2.0/forecast/daily?key=b5ffe9c81de244f9aef3fc7cf5d998b7";
         [HttpGet]
         [Route("city")]
-        public async Task<IActionResult> GetMeteoCity([FromQuery] int cityId = 0)
+        public async Task<IActionResult> GetMeteoCity([FromQuery] string cityName)
         {
-            if (cityId == 0)
+            
+            if (cityName == null || cityName.Length.Equals(0))
             {
-                return NotFound("CityId empty");
+                return NotFound("City name empty");
             }
 
             try	
             {
-                var response = await client.GetStringAsync("https://www.metaweather.com/api/location/" + cityId);
+                var response = await client.GetStringAsync(url + "&city=" + cityName);
                 return Ok(response);
             }
             catch(HttpRequestException e)
             {
                 Console.WriteLine("\nException Caught!" + e.ToString());	
-                return NotFound("CityId incorrect");
+                return NotFound("City incorrect");
             }
         }
 
@@ -46,9 +47,7 @@ namespace Prism.Controllers
             }
             try	
             {
-                var cities = await client.GetStringAsync("https://www.metaweather.com/api/location/search/?lattlong="+lat+","+lng);
-                JArray json = JArray.Parse(cities);
-                var response = await client.GetStringAsync("https://www.metaweather.com/api/location/" + json[0]["woeid"]);
+                var response = await client.GetStringAsync(url + "&lat=" + lat + "&lon=" + lng);
                 return Ok(response);
             }
             catch(HttpRequestException e)
