@@ -44,7 +44,7 @@ namespace Prism.Controllers
             return Ok(new
             {
                 news = database.NewsArticles.Where(x => sources.Contains(x.NewsSource))
-                    .OrderBy(x => x.SimHash).Select(x => new { x.Id, x.Title, x.Source, x.Content, x.ImageUrl, x.Link, x.SimHash})
+                    .OrderByDescending(x => x.Group).Select(x => new { x.Id, x.Title, x.Source, x.Content, x.ImageUrl, x.Link, x.CreateDate, x.Group})
                     .Skip(page*20).Take(20).ToList()
             });
         }
