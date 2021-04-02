@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 
 namespace Prism.Controllers
 {
@@ -13,8 +12,8 @@ namespace Prism.Controllers
     public class MeteoController: ControllerBase
     {
         
-        static readonly HttpClient client = new HttpClient();
-        private string url = "https://api.weatherbit.io/v2.0/forecast/daily?key=b5ffe9c81de244f9aef3fc7cf5d998b7";
+        private static readonly HttpClient Client = new HttpClient();
+        private const string url = "https://api.weatherbit.io/v2.0/forecast/daily?key=b5ffe9c81de244f9aef3fc7cf5d998b7";
         [HttpGet]
         [Route("city")]
         public async Task<IActionResult> GetMeteoCity([FromQuery] string cityName)
@@ -27,7 +26,7 @@ namespace Prism.Controllers
 
             try	
             {
-                var response = await client.GetStringAsync(url + "&city=" + cityName);
+                var response = await Client.GetStringAsync(url + "&city=" + cityName);
                 return Ok(response);
             }
             catch(HttpRequestException e)
@@ -47,7 +46,7 @@ namespace Prism.Controllers
             }
             try	
             {
-                var response = await client.GetStringAsync(url + "&lat=" + lat + "&lon=" + lng);
+                var response = await Client.GetStringAsync(url + "&lat=" + lat + "&lon=" + lng);
                 return Ok(response);
             }
             catch(HttpRequestException e)

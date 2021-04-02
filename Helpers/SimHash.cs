@@ -9,12 +9,13 @@ namespace Prism.Helpers
 
         public static uint SimHashOfString(string s)
         {
-            //char[] delimiters = {' ', ',', '.'};
-            //var words = s.ToLower().Split(delimiters);
-            char[] toBeRemoved = {' ',',', '.', '!'};
-            var words = NGrams(s.ToLower().Trim(toBeRemoved), 2);
+            char[] delimiters = {' ', ',', '.'};
+            var words = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            //s = Regex.Replace( s, "[.,-:]", string.Empty);
+            //var words = NGrams(s.ToLower(), 2);
             string[] hashedWords = new string[words.Length];
-            var jenkins = JenkinsOneAtATimeFactory.Instance.Create();
+            //var jenkins = JenkinsOneAtATimeFactory.Instance.Create();
+            var jenkins = JenkinsLookup2Factory.Instance.Create();
 
             for (int i = 0; i < words.Length; i++)
             {
