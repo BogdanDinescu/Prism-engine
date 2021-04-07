@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Prism.Models
 {
     [Index(nameof(Group))]
+    [Index(nameof(CreateDate))]
     public class NewsArticle
     {
         [Key]

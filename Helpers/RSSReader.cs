@@ -44,9 +44,17 @@ namespace Prism.Helpers
             // read from all sources
             for (int i = 0; i < newsSources.Count; i++)
             {
-                NewsSource source = newsSources[i];
-                List<NewsArticle> articles = Read(source.Link,source);
-                newsArticles.AddRange(articles);
+                try
+                {
+                    NewsSource source = newsSources[i];
+                    List<NewsArticle> articles = Read(source.Link,source);
+                    newsArticles.AddRange(articles);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                
             }
             
             // last group number
