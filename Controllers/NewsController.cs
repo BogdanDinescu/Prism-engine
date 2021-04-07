@@ -28,7 +28,7 @@ namespace Prism.Controllers
             {
                 return Int32.Parse(User.FindFirst(ClaimTypes.Name)?.Value);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new ApplicationException("UserId was not found");
             }
@@ -51,15 +51,27 @@ namespace Prism.Controllers
 
         [HttpGet]
         [Route("search")]
-        public IActionResult Search([FromQuery] string searchQuery)
+        public IActionResult Search([FromQuery] string searchQuery, [FromQuery] string date)
         {
-            if (searchQuery == null || searchQuery.Length.Equals(0))
+            IQueryable<NewsArticle> query = database.NewsArticles.AsQueryable();;
+            if (!string.IsNullOrEmpty(searchQuery))
             {
-                return NoContent();
+                query = database.NewsArticles.Where(a => a.Title.Contains(searchQuery));
             }
+
+            try
+            {
+                DateTime dateTime = DateTime.Parse(date);
+                query = query.Where(a => a.CreateDate.Equals(dateTime)).OrderBy(x => x.Id);
+            }
+            catch (Exception)
+            {
+                query = query.OrderByDescending(x => x.CreateDate);
+            }
+            
             return Ok(new
             {
-                news = database.NewsArticles.Where(a => a.Title.Contains(searchQuery)).OrderBy(x => x.Id).Take(50).ToList()
+                news = query.Take(50).ToList()
             });
         }
 
