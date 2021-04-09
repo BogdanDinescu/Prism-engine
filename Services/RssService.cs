@@ -6,12 +6,26 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Xml;
+using Prism.Helpers;
 
-namespace Prism.Helpers
+namespace Prism.Services
 {
-    public static class RSSReader
+    public interface IRssService
     {
-        public static List<NewsArticle> Read(string link, NewsSource newsSource)
+        void ReadAllAndStore();
+        List<NewsArticle> Read(string link, NewsSource newsSource);
+    }
+    
+    public class RssService: IRssService
+    {
+        private readonly DatabaseCtx context;
+
+        public RssService(DatabaseCtx context)
+        {
+            this.context = context;
+        }
+
+        public List<NewsArticle> Read(string link, NewsSource newsSource)
         {       
             XmlReader reader = XmlReader.Create(link);
             SyndicationFeed feed = SyndicationFeed.Load(reader);
@@ -36,9 +50,9 @@ namespace Prism.Helpers
             return articles;
         }
 
-        public static void ReadAllAndStore(DatabaseCtx databaseCtx)
+        public void ReadAllAndStore()
         {
-            List<NewsSource> newsSources = databaseCtx.NewsSources.ToList();
+            List<NewsSource> newsSources = context.NewsSources.ToList();
             //databaseCtx.NewsArticles.RemoveRange(databaseCtx.NewsArticles);
             List<NewsArticle> newsArticles = new List<NewsArticle>();
             // read from all sources
@@ -58,7 +72,7 @@ namespace Prism.Helpers
             }
             
             // last group number
-            int lastGroup = databaseCtx.NewsArticles.Select(x => (int?)x.Group).Max() ?? 0;
+            int lastGroup = context.NewsArticles.Select(x => (int?)x.Group).Max() ?? 0;
             
             for (int rep = 0; rep < 31; rep++) // 32 is number of bits of the SimHash fingerprint
             {
@@ -89,8 +103,8 @@ namespace Prism.Helpers
                 }
             }
 
-            databaseCtx.AddRange(newsArticles);
-            databaseCtx.SaveChanges();
+            context.AddRange(newsArticles);
+            context.SaveChanges();
             Debug.WriteLine("News read from " + newsSources.Count.ToString() + " sources");
         }
         
@@ -107,7 +121,7 @@ namespace Prism.Helpers
             return setBits;
         }
         
-        public static uint RotateLeft(this uint value, int count)
+        public static uint RotateLeft(uint value, int count)
         {
             return (value << count) | (value >> (32 - count));
         }

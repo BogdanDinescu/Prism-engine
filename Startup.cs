@@ -31,6 +31,11 @@ namespace Prism
             services.AddDbContext<DatabaseCtx>(options =>
                 options.UseMySql(Environment.GetEnvironmentVariable("DOTNET_CONNECTION_STRING"), new MySqlServerVersion(new Version(8, 0, 0))));
 
+            // configure cron job
+            services.AddHostedService<RssReaderService>();
+
+            services.AddScoped<IRssService, RssService>();
+            
             // configure acces from different port
             services.AddCors(options =>
             {
