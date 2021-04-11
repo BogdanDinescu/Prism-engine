@@ -1,6 +1,7 @@
 using System;
 using System.Data.HashFunction.Jenkins;
 using System.Linq;
+using System.Collections;
 
 namespace Prism.Helpers
 {
@@ -13,55 +14,50 @@ namespace Prism.Helpers
             var words = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
             //s = Regex.Replace( s, "[.,-:]", string.Empty);
             //var words = NGrams(s.ToLower(), 2);
-            string[] hashedWords = new string[words.Length];
+            BitArray[] hashedWords = new BitArray[words.Length];
             //var jenkins = JenkinsOneAtATimeFactory.Instance.Create();
             var jenkins = JenkinsLookup2Factory.Instance.Create();
 
             for (int i = 0; i < words.Length; i++)
             {
-                hashedWords[i] = "";
                 byte[] hash = jenkins.ComputeHash(System.Text.Encoding.UTF8.GetBytes(words[i])).Hash;
-                for (int j = 0; j < 4; j++)
-                {
-                    hashedWords[i] += Convert.ToString(hash[j], 2).PadLeft(8, '0');
-                }
+                hashedWords[i] = new BitArray(hash);
             }
 
-            string result = "";
+            BitArray result = new BitArray(32);
             var sum = 0;
-
             for (int j = 0; j < 32; j++)
             {
                 sum = 0;
                 for (int i = 0; i < hashedWords.Length; i++)
                 {
-                    if (hashedWords[i][j].Equals('0'))
-                    {
-                        sum -= 1;
-                    }
-                    else
+                    if ( hashedWords[i].Get(j) )
                     {
                         sum += 1;
                     }
+                    else
+                    {
+                        sum -= 1;
+                    }
                 }
+
                 if (sum < 0)
                 {
-                    result += "0";
+                    result[j] = false;
                 }
                 else
                 {
-                    result += "1";
+                    result[j] = true;
                 }
             }
-
-            int numOfBytes = result.Length / 8;
-            byte[] bytes = new byte[numOfBytes];
-            for (int i = 0; i < numOfBytes; i++)
-            {
-                bytes[i] = Convert.ToByte(result.Substring(8 * i, 8), 2);
-            }
-
-            return BitConverter.ToUInt32(bytes, 0);
+            return BitConverter.ToUInt32(BitArrayToByteArray(result), 0);
+        }
+        
+        private static byte[] BitArrayToByteArray(BitArray bits)
+        {
+            byte[] result = new byte[(bits.Length - 1) / 8 + 1];
+            bits.CopyTo(result, 0);
+            return result;
         }
         
         private static string[] NGrams(string str, int chunkSize)

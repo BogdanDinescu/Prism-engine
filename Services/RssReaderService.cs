@@ -27,8 +27,6 @@ namespace Prism.Services
             }
             var now = DateTime.Now;
             var firstInterval = nextRun.Subtract(now);
-            Console.WriteLine(firstInterval);
-            Console.WriteLine(nextRun);
             
             Action action = () =>
             {
