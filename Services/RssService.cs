@@ -66,7 +66,7 @@ namespace Prism.Services
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    Console.WriteLine("Cannot read from source" + newsSources[i].Name);
                 }
                 
             }
@@ -105,7 +105,7 @@ namespace Prism.Services
 
             context.AddRange(newsArticles);
             context.SaveChanges();
-            Debug.WriteLine("News read from " + newsSources.Count.ToString() + " sources");
+            Console.WriteLine("News read from " + newsSources.Count.ToString() + " sources");
         }
         
         public static uint HammingDistance(uint n1, uint n2)

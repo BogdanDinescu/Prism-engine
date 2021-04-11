@@ -32,7 +32,6 @@ namespace Prism.Services
             {
                 var t1 = Task.Delay(firstInterval);
                 t1.Wait();
-                ReadAndStore(null);
                 timer = new Timer(ReadAndStore, null, TimeSpan.Zero, interval);
             };
 
