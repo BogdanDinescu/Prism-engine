@@ -10,8 +10,10 @@ namespace Prism.Helpers
 
         public static uint SimHashOfString(string s)
         {
-            char[] delimiters = {' ', ',', '.'};
+            char[] delimiters = {' ', ',', '.', ':'};
             var words = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            string[] toRemove = {"de","pe","la","cu","a","se"};
+            words = words.Where(x => !toRemove.Contains(x)).ToArray();
             //s = Regex.Replace( s, "[.,-:]", string.Empty);
             //var words = NGrams(s.ToLower(), 2);
             BitArray[] hashedWords = new BitArray[words.Length];

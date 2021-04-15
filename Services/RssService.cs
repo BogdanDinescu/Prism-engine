@@ -83,7 +83,7 @@ namespace Prism.Services
                 {
                     var previous = newsArticles[i - 1];
                     var current = newsArticles[i];
-                    if (HammingDistance(previous.SimHash, current.SimHash) <= 4)
+                    if (HammingDistance(previous.SimHash, current.SimHash) <= 3)
                     {
                         if (previous.Group == 0)
                         {
