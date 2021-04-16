@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Prism.Data;
 using Prism.Models;
 using System;
@@ -30,7 +29,7 @@ namespace Prism.Controllers
             {
                 return Int32.Parse(User.FindFirst(ClaimTypes.Name)?.Value);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new ApplicationException("UserId was not found");
             }
@@ -62,10 +61,73 @@ namespace Prism.Controllers
         [Route("news")]
         public IActionResult GetNewsPreferences()
         {
-            int userId = GetUserId();
-            
-            return Ok(database.UserPreferences.Where(u => u.UserId == userId).SelectMany(u => u.NewsSources));
+            try
+            {
+                int userId = GetUserId();
+                return Ok(database.UserPreferences.Where(u => u.UserId == userId).SelectMany(u => u.NewsSources));
+            }
+            catch (ApplicationException)
+            {
+                return NotFound("User not found!");
+            }
+        }
 
+        [HttpPost]
+        [Route("city")]
+        public IActionResult PostCityPreference([FromBody] string city)
+        {
+            try
+            {
+                int userId = GetUserId();
+                var preference = database.UserPreferences.First(u => u.UserId == userId);
+                preference.City = city;
+                database.SaveChanges();
+                return Ok();
+            }
+            catch (ApplicationException)
+            {
+                return NotFound("User not found!");
+            }
+        }
+
+        [HttpDelete]
+        [Route("city")]
+        public IActionResult DeleteCityPreferences()
+        {
+            try
+            {
+                int userId = GetUserId();
+                var preference = database.UserPreferences.First(u => u.UserId == userId);
+                preference.City = null;
+                database.SaveChanges();
+                return Ok();
+            }
+            catch (ApplicationException)
+            {
+                return NotFound("User not found!");
+            }
+        }
+
+        [HttpGet]
+        [Route("city")]
+        public IActionResult GetCityPreference()
+        {
+            try
+            {
+                int userId = GetUserId();
+                var city = database.UserPreferences.Where(u => u.UserId == userId).Select(u => u.City).First();
+                if (city == null)
+                    return NoContent();
+                
+                return Ok(new {
+                    city = city
+                });
+            }
+            catch (ApplicationException)
+            {
+                return NotFound("User not found!");
+            }
+            
         }
     }
 }

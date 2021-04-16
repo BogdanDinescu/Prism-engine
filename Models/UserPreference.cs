@@ -9,6 +9,8 @@ namespace Prism.Models
         [Key]
         [ForeignKey("User")]
         public int UserId { get; set; }
+        [MaxLength(60)]
+        public string City { get; set; }
 
         public virtual User User { get; set; }
         public virtual ICollection<NewsSource> NewsSources { get; set; }

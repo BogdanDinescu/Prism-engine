@@ -149,7 +149,7 @@ namespace Prism.Controllers
             {
                 return Int32.Parse(User.FindFirst(ClaimTypes.Name)?.Value);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new ApplicationException("UserId was not found");
             }

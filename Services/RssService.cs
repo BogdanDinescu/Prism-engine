@@ -64,7 +64,7 @@ namespace Prism.Services
                     List<NewsArticle> articles = Read(source.Link,source);
                     newsArticles.AddRange(articles);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine("Cannot read from source" + newsSources[i].Name);
                 }
