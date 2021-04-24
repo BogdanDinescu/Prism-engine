@@ -2,6 +2,8 @@
 using Prism.Models;
 using System;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Prism.Services
 {
@@ -108,12 +110,14 @@ namespace Prism.Services
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty.");
-            var sha256 = new System.Security.Cryptography.HMACSHA256();
-
-            byte[] passwordSalt = sha256.Key;
-            string passwordHash = BitConverter.ToString(sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)));
+            byte[] passwordSalt = new byte[128 / 8];
+            var rng = RandomNumberGenerator.Create();
+            var sha256 = SHA256.Create();
+                
+            rng.GetBytes(passwordSalt);
+            string passwordHash = BitConverter.ToString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password).Concat(passwordSalt).ToArray()));
             sha256.Clear();
-
+            
             return (passwordHash, passwordSalt);
         }
 
@@ -121,15 +125,14 @@ namespace Prism.Services
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty");
-            /*if (passwordHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (password.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");*/
-
-            var sha256 = new System.Security.Cryptography.HMACSHA256(salt);
-            string computedHash = BitConverter.ToString(sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)));
-
+            var sha256 = SHA256.Create();
+            
+            string computedHash = BitConverter.ToString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password).Concat(salt).ToArray()));
+            sha256.Clear();
+            
             if (!computedHash.Equals(passwordHash))
                 return false;
-
+            
             return true;
         }
     }
