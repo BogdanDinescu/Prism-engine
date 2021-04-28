@@ -140,15 +140,5 @@ namespace Prism.Controllers
             }
             return NotFound("Source not found with id " + id);
         }
-
-        /* to be deleted
-        [HttpGet]
-        [Route("load-new")]
-        public IActionResult LoadNewNews()
-        {
-            RSSReader.ReadAllAndStore(database);
-            return Ok();
-        }
-        */
     }
 }

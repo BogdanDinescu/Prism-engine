@@ -97,10 +97,8 @@ namespace Prism.Services
         public void Delete(int id)
         {
             var user = context.Users.Find(id);
-            var userPreference = context.UserPreferences.Find(id);
             if (user != null)
             {
-                context.UserPreferences.Remove(userPreference);
                 context.Users.Remove(user);
                 context.SaveChanges();
             }

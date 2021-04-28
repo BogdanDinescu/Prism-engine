@@ -13,7 +13,7 @@ namespace Prism.Services
     public interface IRssService
     {
         void ReadAllAndStore();
-        List<NewsArticle> Read(string link, NewsSource newsSource);
+        List<NewsArticle> Read(NewsSource newsSource);
     }
     
     public class RssService: IRssService
@@ -25,9 +25,9 @@ namespace Prism.Services
             this.context = context;
         }
 
-        public List<NewsArticle> Read(string link, NewsSource newsSource)
+        public List<NewsArticle> Read(NewsSource newsSource)
         {       
-            XmlReader reader = XmlReader.Create(link);
+            XmlReader reader = XmlReader.Create(newsSource.Link);
             SyndicationFeed feed = SyndicationFeed.Load(reader);
             reader.Close();
 
@@ -61,7 +61,7 @@ namespace Prism.Services
                 try
                 {
                     NewsSource source = newsSources[i];
-                    List<NewsArticle> articles = Read(source.Link,source);
+                    List<NewsArticle> articles = Read(source);
                     newsArticles.AddRange(articles);
                 }
                 catch (Exception)
