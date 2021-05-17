@@ -13,7 +13,7 @@ namespace Prism.Services
         User Register(User user, string password);
         void UpdatePassword(int id, string oldPassword, string newPassword);
         User Update(int id, UserUpdate newUser);
-        void Delete(int id);
+        void Delete(int id, string password);
         User GetById(int id);
     }
 
@@ -69,7 +69,7 @@ namespace Prism.Services
                 throw new ApplicationException("User not found");
 
             if (!VerifyPassword(oldPassword, user.Password, user.Salt))
-                throw new ApplicationException("Old password is not corect");
+                throw new ApplicationException("Old password is not correct");
 
             var pair = PasswordHash(newPassword);
 
@@ -94,14 +94,18 @@ namespace Prism.Services
             return user;
         }
 
-        public void Delete(int id)
+        public void Delete(int id, string password)
         {
             var user = context.Users.Find(id);
-            if (user != null)
-            {
-                context.Users.Remove(user);
-                context.SaveChanges();
-            }
+            
+            if (user == null)
+                throw new ApplicationException("User not found");
+            
+            if (!VerifyPassword(password, user.Password, user.Salt))
+                throw new ApplicationException("Password is not correct");
+            
+            context.Users.Remove(user);
+            context.SaveChanges();
         }
 
         private (string,byte[]) PasswordHash(string password)

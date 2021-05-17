@@ -128,13 +128,14 @@ namespace Prism.Controllers
             
         }
 
-        [HttpDelete]
-        public IActionResult Delete()
+        [HttpPut]
+        [Route("delete-user")]
+        public IActionResult Delete([FromBody] PasswordModel password)
         {
             try
             {
                 int id = GetUserId();
-                userService.Delete(id);
+                userService.Delete(id, password.Password);
                 return Ok();
             }
             catch (ApplicationException e)
