@@ -61,7 +61,7 @@ namespace Prism.Controllers
             try
             {
                 DateTime dateTime = DateTime.Parse(date);
-                query = query.Where(a => a.CreateDate.Equals(dateTime)).OrderBy(x => x.Id);
+                query = query.Where(a => a.CreateDate.Equals(dateTime)).OrderByDescending(x => x.Group);
             }
             catch (Exception)
             {
