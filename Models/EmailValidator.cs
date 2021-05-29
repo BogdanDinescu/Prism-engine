@@ -1,7 +1,9 @@
-﻿using Prism.Data;
+﻿using System;
+using Prism.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
+using DnsClient;
 
 namespace Prism.Models
 {
@@ -25,6 +27,15 @@ namespace Prism.Models
 
             if (entity != null)
                 return new ValidationResult("Email is already in use");
+
+            var options = new LookupClientOptions();
+            options.Timeout = TimeSpan.FromSeconds(5);
+            var lookup = new LookupClient(options);
+            var result = lookup.Query(email.Split('@')[1], QueryType.MX);
+            var records = result.Answers;
+
+            if (!records.Any())
+                return new ValidationResult("Email does not exist");
 
             return ValidationResult.Success;
         }
