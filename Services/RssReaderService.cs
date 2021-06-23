@@ -20,7 +20,7 @@ namespace Prism.Services
         {
             TimeSpan interval = TimeSpan.FromHours(24);
             // nextRun is next time when it's midday. Today if it's before 12:00 or tomorrow if 12:00 passed
-            var nextRun = DateTime.Today.AddHours(20).AddMinutes(22);
+            var nextRun = DateTime.Today.AddHours(12);
             if (nextRun < DateTime.Now)
             {
                 nextRun = nextRun.AddDays(1);
